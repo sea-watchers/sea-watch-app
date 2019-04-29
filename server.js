@@ -43,6 +43,8 @@ app.get('/about', renderAboutPage);
 
 app.get('/results', renderResultsPage)
 
+app.put('/results', search)
+
 app.get('/saved', renderSavedSearches)
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
@@ -77,4 +79,17 @@ function renderResultsPage(request, response){
 
 function renderSavedSearches(request, response){
   response.render('pages/searches/saved_searches.ejs').catch(error => handleError(error, response));
+}
+
+function search(request, response){
+  const query = request.body.search;
+  const location = searchLocation(query)
+}
+
+function searchLocation(query){
+  //query google API for location
+  const URL = //google geocode goes here
+  superagent.get(URL).then(result => {
+
+  })
 }
