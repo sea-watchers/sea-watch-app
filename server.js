@@ -43,7 +43,7 @@ app.get('/about', renderAboutPage);
 
 app.get('/results', renderResultsPage)
 
-app.put('/results', search)
+// app.post('/results', search)
 
 app.get('/saved', renderSavedSearches)
 
@@ -66,30 +66,27 @@ function handleError(error, response){
 }
 
 function renderLandingPage(request, response){
-  response.render('pages/index.ejs').catch(error => handleError(error, response));
+  response.render('pages/index.ejs')
 }
 
 function renderAboutPage(request, response){
-  response.render('pages/about.ejs').catch(error => handleError(error, response));
+  response.render('pages/about.ejs')
 }
 
 function renderResultsPage(request, response){
-  response.render('pages/searches/results.ejs').catch(error => handleError(error, response));
+  const query = request.query.search;
+  searchLocation(query, response)
+  response.render('pages/searches/results.ejs')
 }
 
 function renderSavedSearches(request, response){
-  response.render('pages/searches/saved_searches.ejs').catch(error => handleError(error, response));
+  response.render('pages/searches/saved_searches.ejs')
 }
 
-function search(request, response){
-  const query = request.body.search;
-  const location = searchLocation(query)
-}
-
-function searchLocation(query){
-  //query google API for location
-  const URL = //google geocode goes here
+function searchLocation(query, response){
+  // query google API for location
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`
   superagent.get(URL).then(result => {
-
-  })
+    console.log(result.body);
+  }).catch(error => handleError(error, response));
 }
