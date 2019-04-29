@@ -1,0 +1,20 @@
+{
+  "name": "sea-watch-app",
+  "version": "1.0.0",
+  "description": "a marine weather app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sea-watchers/sea-watch-app.git"
+  },
+  "author": "Pratiibh Bassi, Tammy Do, Joseph Hangarter, Morgana Spake",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sea-watchers/sea-watch-app/issues"
+  },
+  "homepage": "https://github.com/sea-watchers/sea-watch-app#readme"
+}
