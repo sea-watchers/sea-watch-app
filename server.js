@@ -39,7 +39,11 @@ app.use(methodOverride((request, response) => {
 
 app.get('/', renderLandingPage);
 
+app.get('/about', renderAboutPage);
 
+app.get('/results', renderResultsPage)
+
+app.get('/saved', renderSavedSearches)
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
@@ -63,4 +67,14 @@ function renderLandingPage(request, response){
   response.render('pages/index.ejs').catch(error => handleError(error, response));
 }
 
+function renderAboutPage(request, response){
+  response.render('pages/about.ejs').catch(error => handleError(error, response));
+}
 
+function renderResultsPage(request, response){
+  response.render('pages/searches/results.ejs').catch(error => handleError(error, response));
+}
+
+function renderSavedSearches(request, response){
+  response.render('pages/searches/saved_searches.ejs').catch(error => handleError(error, response));
+}
