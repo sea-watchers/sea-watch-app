@@ -27,3 +27,8 @@ Aquaplot: https://www.aquaplot.com/
 Fish Watch: https://www.fishwatch.gov/resources  
    Works.  
   
+Sunrise, Sunset: https://sunrise-sunset.org/api  
+   Works.  
+
+Solunar: https://solunar.org/#usage  
+   Works.  
