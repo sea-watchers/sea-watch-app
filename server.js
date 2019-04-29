@@ -37,7 +37,7 @@ app.use(methodOverride((request, response) => {
 // Routes
 //==================================
 
-
+app.get('/', renderLandingPage);
 
 
 
@@ -53,3 +53,14 @@ const SQL = {};
 //==================================
 // Functions
 //==================================
+
+function handleError(error, response){
+  response.render('pages/error.ejs', {status: 500, message: `I'm sorry, something has gone wrong.`});
+  console.log(error);
+}
+
+function renderLandingPage(request, response){
+  response.render('pages/index.ejs').catch(error => handleError(error, response));
+}
+
+
