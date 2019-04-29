@@ -19,16 +19,27 @@
     </header>
     <nav>
         <ul>
-            <li>Home</li>
-            <li>Saved</li>
-            <li>New</li>
+            <li><a href="">Home</a></li>
+            <li><a href="">My Searches</a></li>
+            <li><a href="">New Search</a></li>
         </ul>
     </nav>
     
-
+    <!-- First button opens a form to search -->
     <form>
-        <input type="text" name="search" value="New Search">
-        <input type="text" name="savedSearch" value="Saved Searches">
+        <input type="submit" name="search" value="New Search" onclick="test()">
+    </form>
+    
+    
+    <!-- Takes you to results page -->
+    <form action="/results" method="POST">
+        <input id="searchForm" type="text" value="Search for a location">
+        <input type="submit" value="Search">
+    </form>
+    
+    <!-- Takes you to saved searches -->
+    <form action="/searches" method="POST">
+        <input type="submit" name="savedSearch" value="Saved Searches">
     </form>
 
     <div>
