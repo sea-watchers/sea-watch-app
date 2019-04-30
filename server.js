@@ -137,9 +137,9 @@ function searchWorldWeather(lat, lng) {
         const includelocation = 'yes'
         const URL = `https://api.worldweatheronline.com/premium/v1/marine.ashx?key=${process.env.WWO_API_KEY}&q=${lat},${lng}&format=json&includelocation=${includelocation}&tide=${tide}`;
         superagent.get(URL).then(result => {
-            const icon = result.body.data.weather[0].hourly[4].weatherIconUrl[0].value;
+            const icon = result.body.data.weather;
             const html = `<img src="${icon}">`;
-            resolve(html);
+            resolve(icon);
         });
     });
 }
