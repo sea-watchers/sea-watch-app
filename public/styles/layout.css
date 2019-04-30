@@ -1,0 +1,30 @@
+* {
+    background-color: rgb(250, 205, 6)
+}
+
+h1 {
+    font-size: 44px;
+    text-align: center;
+    font-weight: bold;
+}
+
+ul {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+nav {
+    outline: 2px rgb(11, 124, 161) solid;
+}
+
+#buttonHolder {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    margin:auto;
+
+}
+
+
+
+

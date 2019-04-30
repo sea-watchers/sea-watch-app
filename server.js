@@ -76,7 +76,6 @@ function renderAboutPage(request, response) {
 function renderResultsPage(request, response) {
   const query = request.query.search;
   searchLocation(query, response)
-  response.render('pages/searches/results.ejs')
 }
 
 function renderSavedSearches(request, response) {
@@ -85,7 +84,7 @@ function renderSavedSearches(request, response) {
 
 function searchLocation(query, response) {
   // query google API for location
-  const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`
+  const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
   superagent.get(URL).then(result => {
     const lat = result.body.results[0].geometry.location.lat;
     const lng = result.body.results[0].geometry.location.lng;
