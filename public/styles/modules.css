@@ -1,3 +1,8 @@
 #test{
     display: none;
 }
+
+.largerButton {
+    width: 50%;
+}
+

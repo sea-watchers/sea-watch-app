@@ -1,23 +1,10 @@
 <%- include('../layout/head.ejs') %>
 <body>
-    <header>
-        <h1>Sea Watch</h1>
-        <nav>
-            <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">My Searches</a></li>
-                <li><a href="">New Search</a></li>
-            </ul>
-        </nav>
-    </header>
+    <%- include('../layout/header.ejs') %>
+
 <div id="buttonHolder">
     <!-- First button opens a form to search -->
-    <input type="button" id="reveal" name="search" value="New Search">
-
-    <!-- Takes you to saved searches -->
-    <form id="saved" action="/saved" method="POST">
-        <input type="submit" name="savedSearch" value="Saved Searches">
-    </form>
+    <input type="button" id="reveal" name="search" value="New Search" class="largerButton">
 </div>
 
     <!-- Takes you to results page -->
@@ -28,9 +15,6 @@
             <input type="submit" value="Search">
         </form>
     </div>
-
-
-
 
     <div>
         <p>Jokes!</p>
