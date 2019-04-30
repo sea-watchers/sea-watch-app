@@ -60,64 +60,33 @@ const SQL = {};
 // Functions
 //==================================
 
-function handleError(error, response) {
-  response.render('pages/error.ejs', { status: 500, message: `I'm sorry, something has gone wrong.` });
+function handleError(error, response){
+  response.render('pages/error.ejs', {status: 500, message: `I'm sorry, something has gone wrong.`});
   console.log(error);
 }
 
-function renderLandingPage(request, response) {
+function renderLandingPage(request, response){
   response.render('pages/index.ejs')
 }
 
-function renderAboutPage(request, response) {
+function renderAboutPage(request, response){
   response.render('pages/about.ejs')
 }
 
-function renderResultsPage(request, response) {
+function renderResultsPage(request, response){
   const query = request.query.search;
   searchLocation(query, response)
+  response.render('pages/searches/results.ejs')
 }
 
-function renderSavedSearches(request, response) {
+function renderSavedSearches(request, response){
   response.render('pages/searches/saved_searches.ejs')
 }
 
-function searchLocation(query, response) {
+function searchLocation(query, response){
   // query google API for location
   const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`
   superagent.get(URL).then(result => {
-    const lat = result.body.results[0].geometry.location.lat;
-    const lng = result.body.results[0].geometry.location.lng;
-
-    searchAquaplot(lat, lng);
-    searchStormGlass(lat, lng);
-    searchWorldWeather(lat, lng);
-    searchSolunar(lat, lng);
-    searchSunriseSunset(lat, lng);
-    // response.render('pages/searches/results.ejs', { data: result.body.results })
-  }).catch(error => handleError(error, response));
-}
-
-function searchAquaplot(lat, lng) {
-  console.log(lat, lng);
-  superagent.get(`https://api.aquaplot.com/v1/validate/${lng}/${lat}`).auth('morgana.spake@gmail.com', 'IArONVBdrVFoHalO', { type: 'auto' }).then(result => {
     console.log(result.body);
-  })
-}
-
-
-function searchStormGlass(lat, lng) {
-  //
-}
-
-function searchWorldWeather(lat, lng) {
-  //
-}
-
-function searchSolunar(lat, lng) {
-  //
-}
-
-function searchSunriseSunset(lat, lng) {
-  //
+  }).catch(error => handleError(error, response));
 }
