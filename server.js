@@ -86,24 +86,33 @@ async function searchLocation(query, response) {
     // query google API for location
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
     const result = await superagent.get(URL);
+    const address = result.body.results[0].formatted_address
     const lat = result.body.results[0].geometry.location.lat;
     const lng = result.body.results[0].geometry.location.lng;
     console.log('location = ', lat, lng);
 
     const aqua = await searchAquaplot(lat, lng);
-    // const storm = await searchStormGlass(lat, lng);
     const wwo = await searchWorldWeather(lat, lng);
     const solunar = await searchSolunar(lat, lng);
     const sunset = await searchSunriseSunset(lat, lng);
-    console.log(aqua, storm, wwo, solunar, sunset);
+    // const storm = await searchStormGlass(lat, lng); //limit 50 requests per day. Comment out unless specifially testing.
+    //console.log(storm) //comment out unless specifically testing storm glass
+    let data = {
+        address: address,
+        aqua: aqua,
+        wwo: wwo,
+        solunar: solunar,
+        sunset: sunset
+    }
+    console.log(aqua, wwo, solunar, sunset);
+    response.render('pages/searches/results.ejs', { data });
 }
 
 function searchAquaplot(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.aquaplot.com/v1/validate/${lng}/${lat}`;
         superagent.get(URL).auth(process.env.AQUAPLOT_API_USERNAME, process.env.AQUAPLOT_API_KEY, { type: 'auto' }).then(result => {
-            resolve('aquaplot');
-            // console.log(result.body);
+            resolve(result.body.is_valid);
         });
     });
 }
