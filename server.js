@@ -94,7 +94,7 @@ async function searchLocation(query, response) {
 
     const aqua = await searchAquaplot(lat, lng);
     const wwo = await searchWorldWeather(lat, lng);
-    const solunar = await searchSolunar(lat, lng);
+    // const solunar = await searchSolunar(lat, lng);
     const sunset = await searchSunriseSunset(lat, lng);
     // const storm = await searchStormGlass(lat, lng); //limit 50 requests per day. Comment out unless specifially testing.
     //console.log(storm) //comment out unless specifically testing storm glass
@@ -102,10 +102,12 @@ async function searchLocation(query, response) {
         address: address,
         aqua: aqua,
         wwo: wwo,
-        solunar: solunar,
-        sunset: sunset
+        // solunar: solunar,
+        sunset: sunset,
+        map: `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2c%20${lng}&zoom=13&size=600x300&maptype=roadmap
+        &key=${process.env.GEOCODE_API_KEY}">`
     }
-    console.log(aqua, wwo, solunar, sunset);
+    console.log(aqua, wwo, sunset);
     response.render('pages/searches/results.ejs', { data });
 }
 
