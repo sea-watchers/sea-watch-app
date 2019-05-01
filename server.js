@@ -55,6 +55,36 @@ app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
 const SQL = {};
 
+//==================================
+// Constructors and Methods
+//==================================
+
+function Location(data) {
+    this.address = data.formatted_address
+    this.lat = data.geometry.location.lat
+    this.lng = data.geometry.location.lng
+}
+
+function WorldWeather(data) {
+    //`<img src="${icon}">`
+    this.date = data.date;
+    this.maxTemp = data.maxtempF;
+    this.minTemp = data.mintempF;
+    this.tides = data.tides[0].tide_data || 'no tide data available';
+}
+
+function Solunar(data) {
+    this.moonPhase = data.moonPhase
+    this.moonIllumination = data.moonIllumination;
+}
+
+function SunriseSunset(data) {
+    this.sunrise = data.sunrise;
+    this.sunset = data.sunset;
+    this.solarNoon = data.solar_noon;
+    this.nauticalTwillightAM = data.nautical_twilight_begin;
+    this.nauticalTwillightPM = data.nautical_twilight_end;
+}
 
 //==================================
 // Functions
@@ -88,21 +118,17 @@ async function searchLocation(query, response) {
     // query google API for location
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
     const result = await superagent.get(URL);
-    const address = result.body.results[0].formatted_address
-    const lat = result.body.results[0].geometry.location.lat;
-    const lng = result.body.results[0].geometry.location.lng;
-    const map = `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2c%20${lng}&zoom=13&size=600x300&maptype=roadmap
+    const location = new Location(result.body.results[0]);
+    const map = `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
     &key=${process.env.GEOCODE_API_KEY}">`;
-    console.log('location = ', lat, lng);
 
-    const aqua = await searchAquaplot(lat, lng).catch(error => console.log(error));
-    const wwo = await searchWorldWeather(lat, lng).catch(error => console.log(error));
-    const solunar = await searchSolunar(lat, lng).catch(error => console.log(error));
-    const sunset = await searchSunriseSunset(lat, lng).catch(error => console.log(error));
-    const storm = await searchStormGlass(lat, lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
-    //console.log(storm) //comment out unless specifically testing storm glass
+    const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
+    const wwo = await searchWorldWeather(location.lat, location.lng).catch(error => console.log(error));
+    const solunar = await searchSolunar(location.lat, location.lng).catch(error => console.log(error));
+    const sunset = await searchSunriseSunset(location.lat, location.lng).catch(error => console.log(error));
+    const storm = await searchStormGlass(location.lat, location.lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
     let data = {
-        address: address,
+        location: location,
         aqua: aqua,
         wwo: wwo,
         solunar: solunar,
@@ -126,8 +152,8 @@ function searchAquaplot(lat, lng) {
 
 function searchStormGlass(lat, lng) {
     return new Promise(resolve => {
-        // const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
-        superagent.get(url).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
+        const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
+        superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
             console.log(result.body.meta.start, result.body.meta.end)
             resolve(result.body.meta.start);
         });
@@ -140,20 +166,18 @@ function searchWorldWeather(lat, lng) {
         const includelocation = 'yes'
         const URL = `https://api.worldweatheronline.com/premium/v1/marine.ashx?key=${process.env.WWO_API_KEY}&q=${lat},${lng}&format=json&includelocation=${includelocation}&tide=${tide}`;
         superagent.get(URL).then(result => {
-            const icon = result.body.data.weather;
-            const html = `<img src="${icon}">`;
-            resolve(icon);
+            const week = result.body.data.weather.map(day => new WorldWeather(day));
+            resolve(week);
         });
     });
 }
 
 function searchSolunar(lat, lng) {
     return new Promise(resolve => {
-        const date = 20180207
+        const date = Date.now();
         const URL = `https://api.solunar.org/solunar/${lat},${lng},${date},-4`
         superagent.get(URL).then(result => {
-            console.log(result.body.moonPhase);
-            resolve(result.body.moonPhase);
+            resolve(new Solunar(result.body.moonPhase));
         });
     });
 }
@@ -162,8 +186,7 @@ function searchSunriseSunset(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`
         superagent.get(URL).then(result => {
-            console.log(result.body);
-            resolve(result.body);
+            resolve(new SunriseSunset(result.body.results));
         });
     });
 }

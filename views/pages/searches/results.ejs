@@ -15,15 +15,19 @@
         <li><a href="">My Searches</a></li>
         <li><a href="">About</a></li>
     </ul>
-    <h2><%= data.address %></h2>
-    <p>valid port city: <%= data.aqua %></p>
+    <h2>
+        <%= data.location.address %>
+    </h2>
+    <p>valid port city:
+        <%= data.aqua %>
+    </p>
     <%- data.map %>
-    <% for (let i in data.wwo) {%>
-      <% let day = data.wwo[i]; %>
-      <%- include('../../layout/day.ejs', {day}) %>
-      <% } %>
-    <!-- .hourly[4].weatherIconUrl[0].value -->
-   
+        <% for (let i in data.wwo) {%>
+            <% let day = data.wwo[i]; %>
+                <%- include('../../layout/day.ejs', {day, i}) %>
+                    <% } %>
+
+
 </body>
 
 </html>
