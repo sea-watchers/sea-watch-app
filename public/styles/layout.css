@@ -1,6 +1,6 @@
-* {
+/* * {
     background-color: rgb(250, 205, 6)
-}
+} */
 
 h1 {
     font-size: 44px;
@@ -23,6 +23,56 @@ nav {
     width: 50%;
     margin: auto;
 }
+
+.authors {
+    border: 2px rgba(0, 0, 0, 0.103);
+    padding: 10px;
+    margin: 3em;
+    width: 90%;
+    height: 250px;
+}
+
+.authorImages {
+    width: 20%;
+    height: 100%;
+    box-shadow: 7px 7px 7px #0635cf;
+    border-radius: 20px;
+}
+
+.authorImages:hover{
+    transform: rotate(-30deg);
+}
+.authorImages:hover >*{
+    transform: rotate(30deg);
+}
+
+.biography {
+    float: right;
+    width: 80%;
+    height: 100%;
+}
+
+.biography > p {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 10px;
+    font-family: 'Acme', sans-serif;
+    font-size: 20px;
+}
+
+#aboutMeBody {
+    background: url(../assets/boat.jpg);
+    background-color: rgba(255,255,255,0.6);
+    background-blend-mode: lighten;
+}
+
+footer {
+    text-align: center;
+}
+
+
 
 
 
