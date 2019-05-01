@@ -41,11 +41,19 @@ app.get('/', renderLandingPage);
 
 app.get('/about', renderAboutPage);
 
-app.get('/results', renderResultsPage)
+app.get('/results', renderResultsPage);
 
 // app.post('/results', search)
 
-app.get('/saved', renderSavedSearches)
+app.get('/saved', renderSavedSearches);
+
+app.post('/saved', (request, response) => {
+
+    const {enterUsername} = request.body;
+    const sql = 'INSERT INTO users (user_name) VALUES ($1)'
+    client.query(sql, [enterUsername]); 
+    response.redirect('/saved');
+})
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
@@ -54,6 +62,7 @@ app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 //==================================
 
 const SQL = {};
+
 
 //==================================
 // Constructors

@@ -14,5 +14,3 @@ CREATE TABLE saved_searches (
   person INTEGER,
   FOREIGN KEY (person) REFERENCES users(id)
 );
-
-

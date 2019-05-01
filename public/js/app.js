@@ -3,3 +3,5 @@ $(document).ready(function(){
     $('#test').toggle('slow');
   });
 });
+
+// let testUsername = $('#test').find('input[name="enterUsername"]').val()
