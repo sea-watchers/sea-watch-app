@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sea Watch</title>
-</head>
-
+<%- include('../../layout/head.ejs') %>
 <body>
-    <h1>Sea Watch</h1>
-    <ul>
-        <li><a href="">Home</a></li>
-        <li><a href="">My Searches</a></li>
-        <li><a href="">About</a></li>
-    </ul>
+    <%- include('../../layout/header.ejs') %>
+
     <ul>
         <div>
             <% for (let i in data) {%>
@@ -25,6 +12,11 @@
                     <img src="http://film.ucsc.edu/sites/default/files/socdoc/socdoc-home-dark-grey-rectangle.png">
         </div>
     </ul>
+
+    <footer>
+        <%- include('../../layout/footer.ejs') %>
+    </footer>
+    
 </body>
 
 </html>
