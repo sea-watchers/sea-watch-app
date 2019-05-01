@@ -2,21 +2,18 @@
 <body>
     <%- include('../../layout/header.ejs') %>
 
-    <ul>
-        <div>
-            <% for (let i in data) {%>
-                <li>
-                    <%- data[i] %>
-                </li>
-                <% } %>
-                    <img src="http://film.ucsc.edu/sites/default/files/socdoc/socdoc-home-dark-grey-rectangle.png">
-        </div>
-    </ul>
+<h2><%= data.address %></h2>
+    <p>valid port city: <%= data.aqua %></p>
+    <%- data.map %>
+    <% for (let i in data.wwo) {%>
+      <% let day = data.wwo[i]; %>
+      <%- include('../../layout/day.ejs', {day}) %>
+      <% } %>
 
     <footer>
         <%- include('../../layout/footer.ejs') %>
     </footer>
-    
+
 </body>
 
 </html>
