@@ -1,10 +1,20 @@
+
 <%- include('../layout/head.ejs') %>
-<body>
-    <%- include('../layout/header.ejs') %>
 
+    <body>
+        <%- include('../layout/header.ejs') %>
+            <main>
+                <h2>Status:
+                    <%= status %>
+                </h2>
+                <p>
+                    <%= message %>
+                </p>
+            </main>
+            <footer>
+                <%- include('../layout/footer.ejs') %>
+            </footer>
+    </body>
 
-<footer>
-    <%- include('../layout/footer.ejs') %>
-</footer>
+    </html>
 
-</body>

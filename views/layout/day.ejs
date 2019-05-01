@@ -1,2 +1,9 @@
-<!-- <img src="<%= day.hourly[4].weatherIconUrl[0].value %>" alt=""> -->
-<h2><%= day.date %></h2>
+<h2>
+    <%= day.date %>
+</h2>
+<p>High:
+    <%= day.maxTemp %>&#176;</p>
+<p>Low:
+    <%= day.minTemp %>&#176;</p>
+
+<button id="showDetails<%= i %>">Show Hourly</button>

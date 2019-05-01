@@ -1,19 +1,26 @@
-<%- include('../../layout/head.ejs') %>
-<body>
-    <%- include('../../layout/header.ejs') %>
 
-<h2><%= data.address %></h2>
-    <p>valid port city: <%= data.aqua %></p>
+<%- include('../../layout/head.ejs') %>
+
+<body>
+   <%- include('../../layout/header.ejs') %>
+   
+    <h2>
+        <%= data.location.address %>
+    </h2>
+    <p>valid port city:
+        <%= data.aqua %>
+    </p>
     <%- data.map %>
-    <% for (let i in data.wwo) {%>
-      <% let day = data.wwo[i]; %>
-      <%- include('../../layout/day.ejs', {day}) %>
-      <% } %>
+        <% for (let i in data.wwo) {%>
+            <% let day = data.wwo[i]; %>
+                <%- include('../../layout/day.ejs', {day, i}) %>
+                    <% } %>
 
     <footer>
         <%- include('../../layout/footer.ejs') %>
     </footer>
 
 </body>
+
 
 </html>
