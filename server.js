@@ -56,7 +56,7 @@ app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 const SQL = {};
 
 //==================================
-// Constructors and Methods
+// Constructors
 //==================================
 
 function Location(data) {
@@ -144,9 +144,8 @@ function searchAquaplot(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.aquaplot.com/v1/validate/${lng}/${lat}`;
         superagent.get(URL).auth(process.env.AQUAPLOT_API_USERNAME, process.env.AQUAPLOT_API_KEY, { type: 'auto' }).then(result => {
-            // console.log(result.body.is_valid);
             resolve(result.body.is_valid);
-        }).catch(error => console.log(error));
+        });
     });
 }
 
@@ -154,6 +153,7 @@ function searchStormGlass(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
         superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
+            //need to separate hourly data into day-long groups
             console.log(result.body.meta.start, result.body.meta.end)
             resolve(result.body.meta.start);
         });
@@ -173,6 +173,7 @@ function searchWorldWeather(lat, lng) {
 }
 
 function searchSolunar(lat, lng) {
+    //need to change this to get info for each day in the week
     return new Promise(resolve => {
         const date = Date.now();
         const URL = `https://api.solunar.org/solunar/${lat},${lng},${date},-4`
@@ -183,6 +184,7 @@ function searchSolunar(lat, lng) {
 }
 
 function searchSunriseSunset(lat, lng) {
+    //need to change this so that we get info for each day in the week
     return new Promise(resolve => {
         const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`
         superagent.get(URL).then(result => {
