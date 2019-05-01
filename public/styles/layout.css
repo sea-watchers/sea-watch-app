@@ -3,6 +3,9 @@
     background-color: rgba(224, 242, 22, 0.132)
 }
 
+body > * {
+    margin: 10px auto;
+}
 
 ul {
     display: flex;
@@ -70,7 +73,6 @@ footer {
 }
 
 
-
 h1 {
     font-family: 'Pacifico', cursive;
     font-size: 44px;
@@ -80,4 +82,34 @@ h1 {
     padding-left: 15px;
 }
 
+#dailyWeatherSection {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-evenly;
+}
 
+.dailyWeather {
+    border: 2px solid black;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.dailyWeather > * {
+    padding: 7px;
+    text-align: center;
+}
+
+
+/* desktop */
+@media (min-width: 960px) {
+#dailyWeatherSection {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+}
+
+.dailyWeather {
+    width: 13%;
+}
+}
