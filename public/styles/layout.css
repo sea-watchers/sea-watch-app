@@ -1,12 +1,8 @@
-/* * {
-    background-color: rgb(250, 205, 6)
-} */
 
-h1 {
-    font-size: 44px;
-    text-align: center;
-    font-weight: bold;
+* {
+    background-color: rgba(224, 242, 22, 0.132)
 }
+
 
 ul {
     display: flex;
@@ -23,6 +19,7 @@ nav {
     width: 50%;
     margin: auto;
 }
+
 
 .authors {
     border: 2px rgba(0, 0, 0, 0.103);
@@ -74,7 +71,13 @@ footer {
 
 
 
-
-
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 44px;
+    text-align: center;
+    font-weight: bold;
+    color: #57beeb;
+    padding-left: 15px;
+}
 
 
