@@ -79,16 +79,27 @@ function WorldWeather(data) {
     this.date = data.date;
     this.maxTemp = data.maxtempF;
     this.minTemp = data.mintempF;
-    this.hourly = data.hourly.map(hour => new Hour(hour)); //this needs to map to constructed hour objects
+    this.hourly = data.hourly.map(hour => new Hour(hour));
+    this.hourlyTides = data.hourly.map(hour => new HourlyTide(hour));
     this.tides = data.tides[0].tide_data;
 }
 
 //create hour ojects to pull out the data we want
 function Hour(hourlyData) {
-    this.time = hourlyData.time;
-    this.temp = hourlyData.tempF;
-    this.precip = hourlyData.precipMM;
-    this.visibility = hourlyData.visibility;
+    this.Time = hourlyData.time;
+    this.Temp = hourlyData.tempF + '°';
+    this.Precip = hourlyData.precipMM;
+    this.Visibility = hourlyData.visibility;
+    this.Feels_Like = hourlyData.FeelsLikeF + '°';
+}
+
+function HourlyTide(hourlyData) {
+    this.Time = hourlyData.time;
+    this.Swell_Height = hourlyData.swellHeight_m + 'm';
+    this.Swell_Direction = hourlyData.swellDir16Point;
+    this.Wind_Speed = hourlyData.windspeedMiles + 'mph';
+    this.Wind_Direction = hourlyData.winddir16Point;
+    this.Water_Temp = hourlyData.waterTemp_F + '°';
 }
 
 function Solunar(data) {
@@ -142,7 +153,7 @@ async function searchLocation(query, response) {
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
     const result = await superagent.get(URL).catch(error => console.log(error));
     const location = new Location(result.body.results[0]);
-    const map = `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
+    const map = `<img id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
     &key=${process.env.GEOCODE_API_KEY}">`;
 
     const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
@@ -160,7 +171,6 @@ async function searchLocation(query, response) {
         // storm: storm
     }
     console.log(aqua, solunar, sunset);
-    console.log('from server', wwo[0].hourly)
     response.render('pages/searches/results.ejs', { data });
 }
 

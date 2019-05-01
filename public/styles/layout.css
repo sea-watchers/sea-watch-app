@@ -1,9 +1,8 @@
-
 * {
     background-color: rgba(224, 242, 22, 0.132)
 }
 
-body > * {
+body>* {
     margin: 10px auto;
 }
 
@@ -23,7 +22,6 @@ nav {
     margin: auto;
 }
 
-
 .authors {
     border: 2px rgba(0, 0, 0, 0.103);
     padding: 10px;
@@ -39,10 +37,11 @@ nav {
     border-radius: 20px;
 }
 
-.authorImages:hover{
+.authorImages:hover {
     transform: rotate(-30deg);
 }
-.authorImages:hover >*{
+
+.authorImages:hover>* {
     transform: rotate(30deg);
 }
 
@@ -52,7 +51,7 @@ nav {
     height: 100%;
 }
 
-.biography > p {
+.biography>p {
     position: relative;
     top: 50%;
     left: 50%;
@@ -64,14 +63,13 @@ nav {
 
 #aboutMeBody {
     background: url(../assets/boat.jpg);
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(255, 255, 255, 0.6);
     background-blend-mode: lighten;
 }
 
 footer {
     text-align: center;
 }
-
 
 h1 {
     font-family: 'Pacifico', cursive;
@@ -82,6 +80,10 @@ h1 {
     padding-left: 15px;
 }
 
+#map {
+    display: block;
+}
+
 #dailyWeatherSection {
     display: flex;
     flex-flow: column wrap;
@@ -89,27 +91,26 @@ h1 {
 }
 
 .dailyWeather {
-    border: 2px solid black;
     display: flex;
     flex-flow: column wrap;
     align-items: center;
 }
 
-.dailyWeather > * {
+.dailyWeather>* {
     padding: 7px;
     text-align: center;
 }
 
 
 /* desktop */
-@media (min-width: 960px) {
-#dailyWeatherSection {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-evenly;
-}
 
-.dailyWeather {
-    width: 13%;
-}
+@media (min-width: 960px) {
+    #dailyWeatherSection {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+    }
+    .dailyWeather {
+        width: 13%;
+    }
 }

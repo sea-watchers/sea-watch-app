@@ -53,13 +53,28 @@
     justify-content: space-around;
 }
 
-table,
+.dailyWeather {
+    border: 2px solid black;
+}
+
+table {
+    border: 1px black solid;
+    margin: auto;
+}
+
 td {
     border: 1px black solid;
+    padding: 6px;
 }
 
 th {
     border: 1px black solid;
     padding: 6px;
     font-weight: bold;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px auto 10px auto;
 }

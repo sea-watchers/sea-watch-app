@@ -29,7 +29,13 @@
                 </section>
 
                 <section>
-                    <%- include('../../layout/table.ejs', {sghours: data.storm, tableData: data.wwo}) %>
+                    <h2>Weather</h2>
+                    <%- include('../../layout/table.ejs', {tableData: data.wwo.map( day => day.hourly)}) %>
+                </section>
+
+                <section>
+                    <h2>Tides</h2>
+                    <%- include('../../layout/table.ejs', {tableData: data.wwo.map( day => day.hourlyTides)}) %>
                 </section>
 
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
