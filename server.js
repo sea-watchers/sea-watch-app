@@ -70,7 +70,7 @@ function WorldWeather(data) {
     this.date = data.date;
     this.maxTemp = data.maxtempF;
     this.minTemp = data.mintempF;
-    this.tides = data.tides[0].tide_data || 'no tide data available';
+    this.tides = data.tides[0].tide_data;
 }
 
 function Solunar(data) {
@@ -84,6 +84,10 @@ function SunriseSunset(data) {
     this.solarNoon = data.solar_noon;
     this.nauticalTwillightAM = data.nautical_twilight_begin;
     this.nauticalTwillightPM = data.nautical_twilight_end;
+}
+
+function StormGlass(data) {
+    this.hour = data.time.slice(11, 13);
 }
 
 //==================================
@@ -114,6 +118,7 @@ function renderSavedSearches(request, response) {
     response.render('pages/searches/saved_searches.ejs')
 }
 
+// Add logic for if it is a landlocked city
 async function searchLocation(query, response) {
     // query google API for location
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
@@ -133,9 +138,10 @@ async function searchLocation(query, response) {
         wwo: wwo,
         solunar: solunar,
         sunset: sunset,
-        map: map
+        map: map,
+        storm: storm
     }
-    console.log(aqua, solunar, sunset, storm);
+    console.log(aqua, solunar, sunset, storm[6]);
     response.render('pages/searches/results.ejs', { data });
 }
 
@@ -153,9 +159,18 @@ function searchStormGlass(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
         superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
-            //need to separate hourly data into day-long groups
-            console.log(result.body.meta.start, result.body.meta.end)
-            resolve(result.body.meta.start);
+            const hourlyWeatherData = result.body.hours;
+            const week = [];
+            let index = 0; 
+            for (let i = 0; i < 7; i++) {
+                const day = [];
+                for (let j = 0; j < 24; j++) {
+                    day.push(new StormGlass(hourlyWeatherData[index]));
+                    index++;
+                }
+                week.push(day);
+            }
+            resolve(week);
         });
     });
 }

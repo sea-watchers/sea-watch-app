@@ -11,10 +11,16 @@
         <%= data.aqua %>
     </p>
     <%- data.map %>
-        <% for (let i in data.wwo) {%>
-            <% let day = data.wwo[i]; %>
-                <%- include('../../layout/day.ejs', {day, i}) %>
-                    <% } %>
+        <section id="dailyWeatherSection">
+            <% for (let i in data.wwo) {%>
+                <% let day = data.wwo[i]; %>
+                    <%- include('../../layout/day.ejs', {day, i}) %>
+                        <% } %>
+        </section>
+
+        <section>
+            <%- include('../../layout/table.ejs', {tableData: data.storm}) %>
+        </section>
 
     <footer>
         <%- include('../../layout/footer.ejs') %>
