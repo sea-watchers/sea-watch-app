@@ -1,46 +1,45 @@
-
 <%- include('../../layout/head.ejs') %>
 
-<body>
-   <%- include('../../layout/header.ejs') %>
-   
-    <h2>
-        <%= data.location.address %>
-    </h2>
-    <p>valid port city:
-        <%= data.aqua %>
-    </p>
-    <%- data.map %>
+    <body>
+        <%- include('../../layout/header.ejs') %>
+
+            <h2>
+                <%= data.location.address %>
+            </h2>
+            <p>valid port city:
+                <%= data.aqua %>
+            </p>
+            <%- data.map %>
 
 
-    <input type="button" id="reveal" name="saveButton" value="Save to Database">
-    
-    <div id="test">
-        <form action="/saved" method="POST">
-            <input type="text" name="enterUsername" placeholder="Insert username here">
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+                <input type="button" id="reveal" name="saveButton" value="Save to Database">
 
-        <section id="dailyWeatherSection">
-            <% for (let i in data.wwo) {%>
-                <% let day = data.wwo[i]; %>
-                    <%- include('../../layout/day.ejs', {day, i}) %>
-                        <% } %>
-        </section>
+                <div id="test">
+                    <form action="/saved" method="POST">
+                        <input type="text" name="enterUsername" placeholder="Insert username here">
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
 
-        <section>
-            <%- include('../../layout/table.ejs', {tableData: data.storm}) %>
-        </section>
+                <section id="dailyWeatherSection">
+                    <% for (let i in data.wwo) {%>
+                        <% let day = data.wwo[i]; %>
+                            <%- include('../../layout/day.ejs', {day, i}) %>
+                                <% } %>
+                </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="/js/app.js"></script>
+                <section>
+                    <%- include('../../layout/table.ejs', {sghours: data.storm, tableData: data.wwo}) %>
+                </section>
 
-    <footer>
-        <%- include('../../layout/footer.ejs') %>
-    </footer>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+                <script src="/js/app.js"></script>
 
-</body>
+                <footer>
+                    <%- include('../../layout/footer.ejs') %>
+                </footer>
+
+    </body>
 
 
-</html>
+    </html>

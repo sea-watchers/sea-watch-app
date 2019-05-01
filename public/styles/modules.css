@@ -1,13 +1,12 @@
 #logo {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
     margin: 30px;
-
 }
 
-#test{
+#test {
     display: none;
 }
 
@@ -21,8 +20,8 @@
     margin: 10px 0 10px;
 }
 
-.sample_data > p {
-    display:flex;
+.sample_data>p {
+    display: flex;
     justify-content: space-evenly;
 }
 
@@ -37,7 +36,6 @@
     width: 50%;
     margin: auto;
     padding-top: 40px;
-
 }
 
 #allSavedSearches {
@@ -47,17 +45,16 @@
     flex-wrap: row-reverse;
     margin-top: 40px;
     margin-bottom: 40px;
-
 }
 
 #footer {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: space-around;
-
 }
 
-table {
+table,
+td {
     border: 1px black solid;
 }
 
