@@ -1,9 +1,18 @@
-<h2>
-    <%= day.date %>
-</h2>
-<p>High:
-    <%= day.maxTemp %>&#176;</p>
-<p>Low:
-    <%= day.minTemp %>&#176;</p>
+<div class="dailyWeather"> 
 
-<button id="showDetails<%= i %>">Show Hourly</button>
+    <h2>
+        <%= day.date %>
+    </h2>
+    <p>High:
+        <%= day.maxTemp %>&#176;</p>
+    <p>Low:
+        <%= day.minTemp %>&#176;</p>
+
+    <p>Tides: </p>    
+    <% for (let i in day.tides) { %>
+        <p><%= day.tides[i].tide_type + ' ' + day.tides[i].tideTime%></p>
+    <% } %>
+
+    <button id="showDetails<%= i %>">Show Hourly</button>
+
+</div>

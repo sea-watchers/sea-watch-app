@@ -56,3 +56,13 @@
     justify-content: space-around;
 
 }
+
+table {
+    border: 1px black solid;
+}
+
+th {
+    border: 1px black solid;
+    padding: 6px;
+    font-weight: bold;
+}
