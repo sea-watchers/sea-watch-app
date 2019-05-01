@@ -61,8 +61,9 @@ const SQL = {};
 //==================================
 
 function handleError(error, response) {
-    response.render('pages/error.ejs', { status: 500, message: `I'm sorry, something has gone wrong.` });
+    console.log('from handle error');
     console.log(error);
+    response.render('pages/error.ejs', { status: 500, message: error });
 }
 
 function renderLandingPage(request, response) {
@@ -76,7 +77,7 @@ function renderAboutPage(request, response) {
 function renderResultsPage(request, response) {
     //search is coming from the search box on the index page.
     const query = request.query.search;
-    searchLocation(query, response)
+    searchLocation(query, response).catch(error => handleError(error, response))
 }
 
 function renderSavedSearches(request, response) {
@@ -90,24 +91,25 @@ async function searchLocation(query, response) {
     const address = result.body.results[0].formatted_address
     const lat = result.body.results[0].geometry.location.lat;
     const lng = result.body.results[0].geometry.location.lng;
+    const map = `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2c%20${lng}&zoom=13&size=600x300&maptype=roadmap
+    &key=${process.env.GEOCODE_API_KEY}">`;
     console.log('location = ', lat, lng);
 
-    const aqua = await searchAquaplot(lat, lng);
-    const wwo = await searchWorldWeather(lat, lng);
-    // const solunar = await searchSolunar(lat, lng);
-    const sunset = await searchSunriseSunset(lat, lng);
-    // const storm = await searchStormGlass(lat, lng); //limit 50 requests per day. Comment out unless specifially testing.
+    const aqua = await searchAquaplot(lat, lng).catch(error => console.log(error));
+    const wwo = await searchWorldWeather(lat, lng).catch(error => console.log(error));
+    const solunar = await searchSolunar(lat, lng).catch(error => console.log(error));
+    const sunset = await searchSunriseSunset(lat, lng).catch(error => console.log(error));
+    const storm = await searchStormGlass(lat, lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
     //console.log(storm) //comment out unless specifically testing storm glass
     let data = {
         address: address,
         aqua: aqua,
         wwo: wwo,
-        // solunar: solunar,
+        solunar: solunar,
         sunset: sunset,
-        map: `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${lat}%2c%20${lng}&zoom=13&size=600x300&maptype=roadmap
-        &key=${process.env.GEOCODE_API_KEY}">`
+        map: map
     }
-    console.log(aqua, wwo, sunset);
+    console.log(aqua, solunar, sunset, storm);
     response.render('pages/searches/results.ejs', { data });
 }
 
@@ -116,17 +118,18 @@ function searchAquaplot(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.aquaplot.com/v1/validate/${lng}/${lat}`;
         superagent.get(URL).auth(process.env.AQUAPLOT_API_USERNAME, process.env.AQUAPLOT_API_KEY, { type: 'auto' }).then(result => {
+            // console.log(result.body.is_valid);
             resolve(result.body.is_valid);
-        });
+        }).catch(error => console.log(error));
     });
 }
 
 function searchStormGlass(lat, lng) {
     return new Promise(resolve => {
-        const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
-        superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
-            resolve('storm glass');
-            // console.log(result.body.meta.start, result.body.meta.end)
+        // const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
+        superagent.get(url).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
+            console.log(result.body.meta.start, result.body.meta.end)
+            resolve(result.body.meta.start);
         });
     });
 }
@@ -149,8 +152,8 @@ function searchSolunar(lat, lng) {
         const date = 20180207
         const URL = `https://api.solunar.org/solunar/${lat},${lng},${date},-4`
         superagent.get(URL).then(result => {
-            resolve('solunar');
-            // console.log(result.body.moonPhase);
+            console.log(result.body.moonPhase);
+            resolve(result.body.moonPhase);
         });
     });
 }
@@ -159,8 +162,8 @@ function searchSunriseSunset(lat, lng) {
     return new Promise(resolve => {
         const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`
         superagent.get(URL).then(result => {
-            resolve('sunrise sunset');
-            // console.log(result.body);
+            console.log(result.body);
+            resolve(result.body);
         });
     });
 }
