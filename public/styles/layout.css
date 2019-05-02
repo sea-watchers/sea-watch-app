@@ -1,6 +1,5 @@
 body {
     margin: 0 auto 100px auto;
-
 }
 
 body>* {
@@ -123,7 +122,7 @@ nav {
     left: 50%;
     transform: translate(-50%, -50%);
     margin-left: 10px;
-    font-family:  sans-serif;
+    font-family: sans-serif;
     font-size: 20px;
 }
 
@@ -161,7 +160,6 @@ footer {
     bottom: 0;
     text-align: center;
     margin: 0 auto;
-
     border: 1px solid black;
     font-family: 'Cantarell', sans-serif;
     font-weight: 700;
@@ -171,21 +169,18 @@ footer {
     letter-spacing: -1px;
 }
 
-footer > * {
+footer>* {
     height: 32px;
     margin: -10px auto 5px auto;
     width: 23%;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
-
 }
 
 footer:last-child {
     padding-top: 17px;
 }
-
-
 
 
 /* desktop */
@@ -199,6 +194,7 @@ footer:last-child {
     .dailyWeather {
         width: 13%;
     }
+
 }
 
 /* https://stackoverflow.com/questions/6410730/how-to-do-a-webkit-css-endless-rotation-animation*/
@@ -238,3 +234,4 @@ footer:last-child {
     -o-animation: rotating 9s linear infinite;
     animation: rotating 9s linear infinite;
   }
+
