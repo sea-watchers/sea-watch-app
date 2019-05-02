@@ -1,9 +1,8 @@
 
-<% for(var i = 0; i < data.length; i++){ %>
     <div class="sample_data"> 
-            <p><%= data[i].location%></p>
+            <p><%= eachData.location%></p>
             <form action="/results" method="POST">
-                <input type="hidden" name="location" value="<%= data[i].location %>">
+                <input type="hidden" name="location" value="<%= eachData.location %>">
                 <input type="submit" value="See Data">
             </form>
                 
@@ -15,4 +14,3 @@
 
     </div>
 
-<% } %>
