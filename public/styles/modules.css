@@ -11,8 +11,7 @@
 }
 
 #test {
-    display: none;
-    
+    display: none;   
 }
 
 h1 {
@@ -24,9 +23,39 @@ h1 {
     padding-left: 15px;
 }
 
+h2 {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 50px auto 10px auto;
+}
+
 .largerButton {
-    width: 50%;
-    background-color: #c89f6c;
+    width: 40%;
+    background-color: #034680;
+    color: white;
+}
+
+input {
+    width: 16%;
+    height: 20px;
+    font-size: 1.3em;
+    margin: 10px 10px 0px 10px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin: 20px auto 10px auto;
+}
+
+.locationInput {
+    width: 15%;
+    height: 20px;
+}
+
+.submitButton {
+    width: 5%;
+    font-size: 1.3em;
+    
 }
 
 .sample_data {
@@ -82,12 +111,6 @@ th {
     font-weight: bold;
 }
 
-h2 {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 20px auto 10px auto;
-}
-
 body {
     background: url(../assets/boat.jpg);
     background-color: rgba(255, 255, 255, 0.6);
@@ -110,6 +133,7 @@ footer {
 nav {
     font-size: 1.5em;
 }
+
 
 #map {
     border: 2px solid black;
