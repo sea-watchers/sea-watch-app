@@ -1,14 +1,22 @@
 #logo {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
     margin: 30px;
-
 }
 
-#test{
+#test {
     display: none;
+}
+
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 5em;
+    text-align: center;
+    font-weight: bold;
+    color: #57beeb;
+    padding-left: 15px;
 }
 
 .largerButton {
@@ -21,8 +29,8 @@
     margin: 10px 0 10px;
 }
 
-.sample_data > p {
-    display:flex;
+.sample_data>p {
+    display: flex;
     justify-content: space-evenly;
 }
 
@@ -37,7 +45,6 @@
     width: 50%;
     margin: auto;
     padding-top: 40px;
-
 }
 
 #allSavedSearches {
@@ -47,22 +54,57 @@
     flex-wrap: row-reverse;
     margin-top: 40px;
     margin-bottom: 40px;
-
 }
 
-#footer {
-    display: flex; 
-    align-items: center;
-    justify-content: space-around;
-
+.dailyWeather {
+    border: 2px solid black;
 }
 
 table {
     border: 1px black solid;
+    margin: auto;
+}
+
+td {
+    border: 1px black solid;
+    padding: 6px;
 }
 
 th {
     border: 1px black solid;
     padding: 6px;
     font-weight: bold;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 20px auto 10px auto;
+}
+
+body {
+    background: url(../assets/boat.jpg);
+    background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: lighten;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+table,
+.dailyWeather {
+    background-color: rgb(248, 241, 232);
+}
+
+nav,
+footer {
+    background-color: #57beeb;
+}
+
+nav {
+    font-size: 1.5em;
+}
+
+#map {
+    border: 2px solid black;
 }

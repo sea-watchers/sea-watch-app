@@ -74,7 +74,27 @@ function WorldWeather(data) {
     this.date = data.date;
     this.maxTemp = data.maxtempF;
     this.minTemp = data.mintempF;
+    this.hourly = data.hourly.map(hour => new Hour(hour));
+    this.hourlyTides = data.hourly.map(hour => new HourlyTide(hour));
     this.tides = data.tides[0].tide_data;
+}
+
+//create hour ojects to pull out the data we want
+function Hour(hourlyData) {
+    this.Time = hourlyData.time;
+    this.Temp = hourlyData.tempF + '°';
+    this.Precip = hourlyData.precipMM;
+    this.Visibility = hourlyData.visibility;
+    this.Feels_Like = hourlyData.FeelsLikeF + '°';
+}
+
+function HourlyTide(hourlyData) {
+    this.Time = hourlyData.time;
+    this.Swell_Height = hourlyData.swellHeight_m + 'm';
+    this.Swell_Direction = hourlyData.swellDir16Point;
+    this.Wind_Speed = hourlyData.windspeedMiles + 'mph';
+    this.Wind_Direction = hourlyData.winddir16Point;
+    this.Water_Temp = hourlyData.waterTemp_F + '°';
 }
 
 function Solunar(data) {
@@ -142,16 +162,16 @@ function storeData(request, response) {
 async function searchLocation(query, response) {
     // query google API for location
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
-    const result = await superagent.get(URL);
+    const result = await superagent.get(URL).catch(error => console.log(error));
     const location = new Location(result.body.results[0]);
-    const map = `<img src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
+    const map = `<img id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
     &key=${process.env.GEOCODE_API_KEY}">`;
 
     const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
     const wwo = await searchWorldWeather(location.lat, location.lng).catch(error => console.log(error));
     const solunar = await searchSolunar(location.lat, location.lng).catch(error => console.log(error));
     const sunset = await searchSunriseSunset(location.lat, location.lng).catch(error => console.log(error));
-    const storm = await searchStormGlass(location.lat, location.lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
+    // const storm = await searchStormGlass(location.lat, location.lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
     let data = {
         location: location,
         aqua: aqua,
@@ -159,9 +179,9 @@ async function searchLocation(query, response) {
         solunar: solunar,
         sunset: sunset,
         map: map,
-        storm: storm
+        // storm: storm
     }
-    console.log(aqua, solunar, sunset, storm[6]);
+    console.log(aqua, solunar, sunset);
     response.render('pages/searches/results.ejs', { data });
 }
 
@@ -171,7 +191,7 @@ function searchAquaplot(lat, lng) {
         const URL = `https://api.aquaplot.com/v1/validate/${lng}/${lat}`;
         superagent.get(URL).auth(process.env.AQUAPLOT_API_USERNAME, process.env.AQUAPLOT_API_KEY, { type: 'auto' }).then(result => {
             resolve(result.body.is_valid);
-        });
+        }).catch(error => console.log(error));
     });
 }
 
@@ -181,7 +201,7 @@ function searchStormGlass(lat, lng) {
         superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
             const hourlyWeatherData = result.body.hours;
             const week = [];
-            let index = 0; 
+            let index = 0;
             for (let i = 0; i < 7; i++) {
                 const day = [];
                 for (let j = 0; j < 24; j++) {
@@ -199,7 +219,7 @@ function searchWorldWeather(lat, lng) {
     return new Promise(resolve => {
         const tide = 'yes'
         const includelocation = 'yes'
-        const URL = `https://api.worldweatheronline.com/premium/v1/marine.ashx?key=${process.env.WWO_API_KEY}&q=${lat},${lng}&format=json&includelocation=${includelocation}&tide=${tide}`;
+        const URL = `https://api.worldweatheronline.com/premium/v1/marine.ashx?key=${process.env.WWO_API_KEY}&q=${lat},${lng}&format=json&includelocation=${includelocation}&tide=${tide}&tp=1`;
         superagent.get(URL).then(result => {
             const week = result.body.data.weather.map(day => new WorldWeather(day));
             resolve(week);

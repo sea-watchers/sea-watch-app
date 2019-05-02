@@ -1,28 +1,42 @@
-
-* {
-    background-color: rgba(224, 242, 22, 0.132)
+body {
+    margin: 0 auto 100px auto;
 }
 
-body > * {
+body>* {
     margin: 10px auto;
 }
 
 ul {
     display: flex;
     justify-content: space-evenly;
+    align-content: center;
+}
+
+li {
+    padding-top: 10px;
+}
+
+li>a {
+    text-decoration: none;
 }
 
 nav {
-    outline: 2px rgb(11, 124, 161) solid;
+    height: 50px;
+}
+
+#reveal {
+    font-size: 1.3em;
+    height: 30px;
 }
 
 #buttonHolder {
+    margin: auto;
+    margin-top: 70px;
+    height: 30px;
     display: flex;
     justify-content: space-evenly;
     width: 50%;
-    margin: auto;
 }
-
 
 .authors {
     border: 2px rgba(0, 0, 0, 0.103);
@@ -39,10 +53,11 @@ nav {
     border-radius: 20px;
 }
 
-.authorImages:hover{
+.authorImages:hover {
     transform: rotate(-30deg);
 }
-.authorImages:hover >*{
+
+.authorImages:hover>* {
     transform: rotate(30deg);
 }
 
@@ -52,7 +67,7 @@ nav {
     height: 100%;
 }
 
-.biography > p {
+.biography>p {
     position: relative;
     top: 50%;
     left: 50%;
@@ -62,24 +77,12 @@ nav {
     font-size: 20px;
 }
 
-#aboutMeBody {
-    background: url(../assets/boat.jpg);
-    background-color: rgba(255,255,255,0.6);
-    background-blend-mode: lighten;
-}
-
-footer {
-    text-align: center;
-}
-
-
 h1 {
-    font-family: 'Pacifico', cursive;
-    font-size: 44px;
-    text-align: center;
-    font-weight: bold;
-    color: #57beeb;
     padding-left: 15px;
+}
+
+#map {
+    display: block;
 }
 
 #dailyWeatherSection {
@@ -89,27 +92,48 @@ h1 {
 }
 
 .dailyWeather {
-    border: 2px solid black;
     display: flex;
     flex-flow: column wrap;
     align-items: center;
 }
 
-.dailyWeather > * {
+.dailyWeather>* {
     padding: 7px;
     text-align: center;
 }
 
+footer {
+    /* display: flex;
+    align-items: center;
+    justify-content: space-around; */
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    margin: 0 auto;
+}
+
+footer>* {
+    height: 13px;
+    margin: -10px auto 5px auto;
+    width: 23%;
+    display: inline-block;
+}
+
+footer:last-child {
+    padding-top: 10px;
+}
+
 
 /* desktop */
-@media (min-width: 960px) {
-#dailyWeatherSection {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-evenly;
-}
 
-.dailyWeather {
-    width: 13%;
-}
+@media (min-width: 960px) {
+    #dailyWeatherSection {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-evenly;
+    }
+    .dailyWeather {
+        width: 13%;
+    }
 }

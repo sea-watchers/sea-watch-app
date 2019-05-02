@@ -1,14 +1,25 @@
 <table>
-    <thead>
-        <!-- hours -->
-        <th>Hours </th>
-        <% for (let i in tableData[0]) { %>
-            <th><%= tableData[0][i].hour %> </th>
-        <% } %>
-    </thead>
-    
+
     <tbody>
-        <!-- number of rows needs to be dynamic based on how many pieces of data are being passed in -->
-    </tbody>   
+        <!-- for each property in the hour objects in the hourly array create a row with a lable -->
+        <% console.log( 'from table', tableData[0]) %>
+            <% for (let i in tableData[0][0]) { %>
+                <tr>
+                    <th>
+
+                        <%= i.replace('_', ' ') %>
+                    </th>
+                    <% for (let j = 0; j < 24; j++) { %>
+                        <td>
+                            <%= tableData[0][j][i] %>
+                        </td>
+                        <% } %>
+
+                </tr>
+                <% } %>
+
+                    <!-- for each hour create a data call for the row -->
+
+    </tbody>
 
 </table>
