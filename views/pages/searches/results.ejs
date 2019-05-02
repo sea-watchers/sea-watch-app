@@ -16,6 +16,9 @@
 
                 <div id="test">
                     <form action="/saved" method="POST">
+                        <input type="hidden" name="location" value="<%= data.location.address %>">
+                        <input type="hidden" name="lat" value="<%= data.location.lat %>">
+                        <input type="hidden" name="lng" value="<%= data.location.lng %>">
                         <input type="text" name="enterUsername" placeholder="Insert username here">
                         <input type="submit" value="Submit">
                     </form>
