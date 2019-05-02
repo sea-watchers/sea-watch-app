@@ -47,7 +47,7 @@ app.get('/results', renderResultsPage);
 
 app.get('/saved', renderSavedSearches);
 
-app.post('/saved', searchUsernameData); 
+app.post('/saved', searchUsernameData);
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
@@ -57,7 +57,9 @@ app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
 const SQL = {};
 SQL.getUsername = 'SELECT * FROM users WHERE user_name=$1';
-// SQL.getData = 'SELECT * FROM saved_searches';
+SQL.saveUsername = 'INSERT INTO users (user_name) VALUES ($1)';
+SQL.saveData = 'INSERT INTO saved_searches (location, lat, lng, person) VALUES ($1, $2, $3, $4)';
+SQL.getData = 'SELECT * FROM saved_searches WHERE person=$1'
 
 //==================================
 // Constructors
@@ -140,22 +142,6 @@ function renderResultsPage(request, response) {
 
 function renderSavedSearches(request, response) {
     response.render('pages/searches/saved_searches.ejs')
-}
-
-function storeUsernameTable(request, response) {
-    const {enterUsername} = request.body;
-    const sql = 'INSERT INTO users (user_name) VALUES ($1)'
-    client.query(sql, [enterUsername]); 
-    response.redirect('/saved');
-}
-
-function storeData(request, response) {
-    const {search} = request.body;
-    const sqlGetID = 'SELECT id FROM users WHERE user_name = $1'
-    client.query(sqlGetID, [enterUsername]).then(result => {
-        result.rows[0]
-    }); 
-    response.redirect('/saved');
 }
 
 // Add logic for if it is a landlocked city
@@ -248,29 +234,43 @@ function searchSunriseSunset(lat, lng) {
     });
 }
 
-function usernameData(user_name) {
-    this.user_name = user_name;
-}
-
-function checkUsernameDatabase(user_name, response) {
-    return client.query(SQL.getUsername, [user_name]).then(result => {
-        console.log(result.rows);
-        if(result.rows.length) {
-            //user ID corresponds to person in schema.sql 
-            let userID = result.rows[0];
-            response.redirect('/saved');
-        } else {
-            return 'Username does not exist';
-        }
-    })
-}
-
 function searchUsernameData(request, response) {
-    const user_name = request.body.enterUsername;
-    console.log(request.body.enterUsername, 'user_name')
-    checkUsernameDatabase(user_name, response).then(result =>{
-        if(result === 'Username does not exist') {
-            storeUsernameTable(request, response);
+    const { enterUsername, location, lat, lng } = request.body;
+    console.log(request.body.enterUsername, 'enterUsername')
+    client.query(SQL.getUsername, [enterUsername]).then(result => {
+        console.log('Username Search', result.rows);
+        if (result.rows.length) {
+            //user ID corresponds to person in schema.sql 
+            let userId = result.rows[0].id;
+            console.log('Store name and data', userId);
+            client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
+                console.log('storing data', userId);
+                renderUserSearches(userId, response);
+            })
+        } else {
+            console.log('Username does not exist');
+            storeUsernameAndData(request, response);
         }
+    });
+}
+
+function storeUsernameAndData(request, response) {
+    const { enterUsername, location, lat, lng } = request.body;
+    client.query(SQL.saveUsername, [enterUsername]).then(result => {
+        client.query(SQL.getUsername, [enterUsername]).then(result => {
+            let userId = result.rows[0].id;
+            console.log('Store name and data', userId);
+            client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
+                console.log('storing data');
+                renderUserSearches(userId, response);
+            })
+        })
+    });
+}
+
+function renderUserSearches(id, response) {
+    client.query(SQL.getData, [id]).then(result => {
+        console.log('From render searches', result.rows)
+        response.redirect('/saved');
     })
 }
