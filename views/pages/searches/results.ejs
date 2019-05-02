@@ -25,26 +25,35 @@
                 </div>
 
                 <section id="dailyWeatherSection">
-                    <% for (let i in data.wwo) {%>
-                        <% let day = data.wwo[i]; %>
-                            <%- include('../../layout/day.ejs', {day, i}) %>
-                                <% } %>
+                    <% let hourly = [] %>
+                        <% let hourlyTides = [] %>
+
+                            <% for (let i in data.wwo) {%>
+                                <% let day = data.wwo[i]; %>
+                                    <% hourly.push(day.hourly); %>
+                                        <% hourlyTides.push(day.hourlyTides); %>
+
+
+                                            <%- include('../../layout/day.ejs', {day, i}) %>
+                                                <% } %>
                 </section>
+                <% for (let i in hourly) {%>
 
-                <section>
-                    <h2>Weather</h2>
-                    <%- include('../../layout/table.ejs', {tableData: data.wwo.map( day => day.hourly)}) %>
-                </section>
+                    <section id="weather<%= i %>" class="hourlyTable">
+                        <h2>Weather</h2>
+                        <%- include('../../layout/table.ejs', {tableData: hourly[i]}) %>
+                    </section>
 
-                <section>
-                    <h2>Tides</h2>
-                    <%- include('../../layout/table.ejs', {tableData: data.wwo.map( day => day.hourlyTides)}) %>
-                </section>
+                    <section id="tides<%= i %>" class="hourlyTable">
+                        <h2>Tides</h2>
+                        <%- include('../../layout/table.ejs', {tableData: hourlyTides[i]}) %>
+                    </section>
+                    <% } %>
+                        <button id="hideDetails" class="hourlyTable">Hide Details</button>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+                        <script src="/js/results.js"></script>
 
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-                <script src="/js/app.js"></script>
-
-                <%- include('../../layout/footer.ejs') %>
+                        <%- include('../../layout/footer.ejs') %>
 
     </body>
 

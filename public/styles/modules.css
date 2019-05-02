@@ -114,3 +114,8 @@ nav {
 #map {
     border: 2px solid black;
 }
+
+.hourlyTable,
+#hideDetails {
+    display: none;
+}

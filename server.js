@@ -176,7 +176,7 @@ async function searchLocation(query, response) {
         map: map,
         // storm: storm
     }
-    console.log(aqua, solunar, sunset);
+    console.log(solunar, sunset);
     response.render('pages/searches/results.ejs', { data });
 }
 
