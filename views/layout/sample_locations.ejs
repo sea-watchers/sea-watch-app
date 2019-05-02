@@ -1,11 +1,18 @@
 
-<div class="sample_data"> 
-    <p>Sample Location</p>
+<% for(var i = 0; i < data.length; i++){ %>
+    <div class="sample_data"> 
+            <p><%= data[i].location%></p>
+            <form action="/results" method="POST">
+                <input type="hidden" name="location" value="<%= data[i].location %>">
+                <input type="submit" value="See Data">
+            </form>
+                
+            <!-- Just a placeholder image. Better sailboat image coming later. Needs to be PNG.-->
+            <!-- This image will most likely be a sailboat. The image will get animated upon a click. -->
+            <img class="sample_image" src="assets/babySailboat.png" alt="" width=150>
 
-    <!-- Just a placeholder image. Better sailboat image coming later. Needs to be PNG.-->
-    <!-- This image will most likely be a sailboat. The image will get animated upon a click. -->
-    <img class="sample_image" src="https://cdn.vectorstock.com/i/thumb-large/76/06/boat-icon-thin-line-black-vector-17697606.jpg" alt="">
+            <!-- animate the sailboat image -->
 
-    <!-- animate the sailboat image -->
+    </div>
 
-</div>
+<% } %>

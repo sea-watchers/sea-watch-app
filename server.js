@@ -49,6 +49,8 @@ app.get('/saved', renderSavedSearches);
 
 app.post('/saved', searchUsernameData);
 
+app.post('/results', savedLocation);
+
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
 //==================================
@@ -141,7 +143,14 @@ function renderResultsPage(request, response) {
 }
 
 function renderSavedSearches(request, response) {
+    // Query database for the ID of the username that the user enters, then call the renderUserSearches
     response.render('pages/searches/saved_searches.ejs')
+}
+
+function savedLocation(request, response) {
+    console.log('TESTING ', request.body.location);
+    let savedLocation = request.body.location;
+    searchLocation(savedLocation, response);
 }
 
 // Add logic for if it is a landlocked city
@@ -271,6 +280,9 @@ function storeUsernameAndData(request, response) {
 function renderUserSearches(id, response) {
     client.query(SQL.getData, [id]).then(result => {
         console.log('From render searches', result.rows)
-        response.redirect('/saved');
+        // response.redirect('/saved');
+        let renderedData = result.rows;
+        response.render('pages/searches/saved_searches.ejs',{data:renderedData});
+
     })
 }
