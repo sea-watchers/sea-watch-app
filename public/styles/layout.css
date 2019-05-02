@@ -61,7 +61,7 @@ nav {
 
 #reveal {
     font-size: 1.3em;
-    height: 30px;
+    height: 35px;
 }
 
 #buttonHolder {
@@ -233,5 +233,11 @@ footer:last-child {
     -ms-animation: rotating 9s linear infinite;
     -o-animation: rotating 9s linear infinite;
     animation: rotating 9s linear infinite;
+  }
+
+  input {
+    font-family: 'Cantarell', sans-serif;
+    font-size: 17px;
+    line-height: 23px;
   }
 
