@@ -10,6 +10,15 @@
     display: none;
 }
 
+h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 5em;
+    text-align: center;
+    font-weight: bold;
+    color: #57beeb;
+    padding-left: 15px;
+}
+
 .largerButton {
     width: 50%;
 }
@@ -47,12 +56,6 @@
     margin-bottom: 40px;
 }
 
-#footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
 .dailyWeather {
     border: 2px solid black;
 }
@@ -77,4 +80,31 @@ h2 {
     font-size: 1.5em;
     font-weight: bold;
     margin: 20px auto 10px auto;
+}
+
+body {
+    background: url(../assets/boat.jpg);
+    background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: lighten;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+table,
+.dailyWeather {
+    background-color: rgb(248, 241, 232);
+}
+
+nav,
+footer {
+    background-color: #57beeb;
+}
+
+nav {
+    font-size: 1.5em;
+}
+
+#map {
+    border: 2px solid black;
 }
