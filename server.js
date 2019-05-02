@@ -47,13 +47,7 @@ app.get('/results', renderResultsPage);
 
 app.get('/saved', renderSavedSearches);
 
-app.post('/saved', (request, response) => {
-
-    const { enterUsername } = request.body;
-    const sql = 'INSERT INTO users (user_name) VALUES ($1)'
-    client.query(sql, [enterUsername]);
-    response.redirect('/saved');
-})
+app.post('/saved', searchUsernameData); 
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 
@@ -62,7 +56,8 @@ app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
 //==================================
 
 const SQL = {};
-
+SQL.getUsername = 'SELECT * FROM users WHERE user_name=$1';
+// SQL.getData = 'SELECT * FROM saved_searches';
 
 //==================================
 // Constructors
@@ -145,6 +140,22 @@ function renderResultsPage(request, response) {
 
 function renderSavedSearches(request, response) {
     response.render('pages/searches/saved_searches.ejs')
+}
+
+function storeUsernameTable(request, response) {
+    const {enterUsername} = request.body;
+    const sql = 'INSERT INTO users (user_name) VALUES ($1)'
+    client.query(sql, [enterUsername]); 
+    response.redirect('/saved');
+}
+
+function storeData(request, response) {
+    const {search} = request.body;
+    const sqlGetID = 'SELECT id FROM users WHERE user_name = $1'
+    client.query(sqlGetID, [enterUsername]).then(result => {
+        result.rows[0]
+    }); 
+    response.redirect('/saved');
 }
 
 // Add logic for if it is a landlocked city
@@ -235,4 +246,31 @@ function searchSunriseSunset(lat, lng) {
             resolve(new SunriseSunset(result.body.results));
         });
     });
+}
+
+function usernameData(user_name) {
+    this.user_name = user_name;
+}
+
+function checkUsernameDatabase(user_name, response) {
+    return client.query(SQL.getUsername, [user_name]).then(result => {
+        console.log(result.rows);
+        if(result.rows.length) {
+            //user ID corresponds to person in schema.sql 
+            let userID = result.rows[0];
+            response.redirect('/saved');
+        } else {
+            return 'Username does not exist';
+        }
+    })
+}
+
+function searchUsernameData(request, response) {
+    const user_name = request.body.enterUsername;
+    console.log(request.body.enterUsername, 'user_name')
+    checkUsernameDatabase(user_name, response).then(result =>{
+        if(result === 'Username does not exist') {
+            storeUsernameTable(request, response);
+        }
+    })
 }
