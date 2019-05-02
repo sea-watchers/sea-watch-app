@@ -109,6 +109,7 @@ nav {
     border: 2px solid black;
 }
 
-.hourlyTable {
+.hourlyTable,
+#hideDetails {
     display: none;
 }

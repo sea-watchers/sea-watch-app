@@ -7,6 +7,9 @@ $('.showHourly').on('click', function(event) {
   $('.hourlyTable').hide();
   $(`#weather${id}`).show();
   $(`#tides${id}`).show();
+  $('#hideDetails').show();
+});
 
-  // <%- include('../../layout/table.ejs', {tableData: hourly[3]}) %>
+$('#hideDetails').on('click', function() {
+  $('.hourlyTable').hide();
 });
