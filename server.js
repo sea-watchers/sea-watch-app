@@ -144,7 +144,7 @@ function renderResultsPage(request, response) {
 
 function renderSavedSearches(request, response) {
     // Query database for the ID of the username that the user enters, then call the renderUserSearches
-    response.render('pages/searches/saved_searches.ejs')
+    response.render('pages/searches/saved_searches.ejs', {data:null})
 }
 
 function savedLocation(request, response) {
@@ -244,7 +244,7 @@ function searchSunriseSunset(lat, lng) {
 }
 
 function searchUsernameData(request, response) {
-    const { enterUsername, location, lat, lng } = request.body;
+    const { enterUsername } = request.body;
     console.log(request.body.enterUsername, 'enterUsername')
     client.query(SQL.getUsername, [enterUsername]).then(result => {
         console.log('Username Search', result.rows);
@@ -252,27 +252,31 @@ function searchUsernameData(request, response) {
             //user ID corresponds to person in schema.sql 
             let userId = result.rows[0].id;
             console.log('Store name and data', userId);
-            client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
-                console.log('storing data', userId);
+            if (request.body.lat) {
+                console.log('User exists, saving to database')
+                storeData(request, response, userId);
+            } else {
+                console.log('User exists, not saving to database')
                 renderUserSearches(userId, response);
-            })
+            }
         } else {
-            console.log('Username does not exist');
-            storeUsernameAndData(request, response);
+            if (request.body.lat) {
+                console.log('User does not exist, saving to database')
+                storeUsername(request, response);
+            } else {
+                console.log('Username does not exist');
+            }
         }
     });
 }
 
-function storeUsernameAndData(request, response) {
+function storeUsername(request, response) {
     const { enterUsername, location, lat, lng } = request.body;
     client.query(SQL.saveUsername, [enterUsername]).then(result => {
         client.query(SQL.getUsername, [enterUsername]).then(result => {
             let userId = result.rows[0].id;
             console.log('Store name and data', userId);
-            client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
-                console.log('storing data');
-                renderUserSearches(userId, response);
-            })
+            storeData(request, response, userId);
         })
     });
 }
@@ -284,5 +288,12 @@ function renderUserSearches(id, response) {
         let renderedData = result.rows;
         response.render('pages/searches/saved_searches.ejs',{data:renderedData});
 
+    })
+}
+
+function storeData(request, response, userId) {
+    const { location, lat, lng } = request.body;
+    client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
+        renderUserSearches(userId, response);
     })
 }
