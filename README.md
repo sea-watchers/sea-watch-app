@@ -12,34 +12,6 @@ Checklist to build your own Sea Watch application:
 6. Run nodemon and open browser to localhost:3000
 7. Deploy to Heroku or preferred platform
 
-### Prerequisites
-Software requirement and installation instructions:
-
-```
-Give examples
-```
-
-### Installing
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-
-## Deployment
-Add additional notes about how to deploy this on a live system
-
 ## Built With
 * [Heroku](https://devcenter.heroku.com/) - Cloud application platform
 * [NPM](https://www.npmjs.com/get-npm) - Package manager
@@ -65,4 +37,11 @@ Morgana Spake
 MIT License
 
 ## Acknowledgments
-* 
+* http://www.mrmcguire.com/10-useful-google-font-combinations-for-your-next-site/
+* https://fonts.google.com/
+* http://flipapicture.com
+*
+*
+*
+*
+*
