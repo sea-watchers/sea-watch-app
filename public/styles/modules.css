@@ -6,8 +6,13 @@
     margin: 30px;
 }
 
+#logoLink {
+    text-decoration: none;
+}
+
 #test {
     display: none;
+    
 }
 
 h1 {
@@ -21,6 +26,7 @@ h1 {
 
 .largerButton {
     width: 50%;
+    background-color: #c89f6c;
 }
 
 .sample_data {

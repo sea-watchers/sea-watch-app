@@ -113,15 +113,17 @@ footer {
     margin: 0 auto;
 }
 
-footer>* {
-    height: 13px;
+footer > * {
+    height: 32px;
     margin: -10px auto 5px auto;
     width: 23%;
     display: inline-block;
+    vertical-align: middle;
+    text-align: center;
 }
 
 footer:last-child {
-    padding-top: 10px;
+    padding-top: 17px;
 }
 
 
