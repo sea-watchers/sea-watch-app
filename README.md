@@ -37,11 +37,12 @@ Morgana Spake
 MIT License
 
 ## Acknowledgments
-* http://www.mrmcguire.com/10-useful-google-font-combinations-for-your-next-site/
-* https://fonts.google.com/
-* http://flipapicture.com
-*
-*
-*
-*
-*
+* Font resource: http://www.mrmcguire.com/10-useful-google-font-combinations-for-your-next-site/  
+* Font resource: https://fonts.google.com/  
+* Image editing: http://flipapicture.com  
+* Fish jokes: http://jokes4us.com/animaljokes/fishjokes.html
+* Image animation: https://www.w3schools.com/howto/howto_css_shake_image.asp
+* Image animation: https://stackoverflow.com/questions/6410730/how-to-do-a-webkit-css-endless-rotation-animation
+* Logo: https://www.freelogohttps://image.flaticon.com/icons/png/512/1264/1264818.pngdesign.org/
+* Favicon generator: https://www.favicon-generator.org/
+* Boat image: https://image.flaticon.com/icons/png/512/1264/1264818.png
