@@ -2,3 +2,9 @@ body {
     box-sizing: border-box;
     text-align: center;
 }
+
+p {
+    font-family: 'Cantarell', sans-serif;
+    font-size: 17px;
+    line-height: 23px;
+}
