@@ -19,7 +19,6 @@ Checklist to build your own Sea Watch application:
 
 ## API Documentation
 * [Geocodeing](https://developers.google.com/maps/documentation/geocoding/intro)
-* [Storm Glass](https://docs.stormglass.io/)
 * [World Weather Online](https://www.worldweatheronline.com/developer/)
 * [On Water](https://onwater.io/documentation)
 * [AQUA PLOT](https://www.aquaplot.com/api)
