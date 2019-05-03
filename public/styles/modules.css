@@ -35,12 +35,12 @@ h2 {
     color: white;
 }
 
-input {
+/* input {
     width: 16%;
     height: 20px;
     font-size: 1.3em;
     margin: 10px 10px 0px 10px;
-}
+} */
 
 h3 {
     font-size: 1.5em;
@@ -53,7 +53,7 @@ h3 {
 }
 
 .submitButton {
-    width: 5%;
+    width: 90px;
     font-size: 1.3em;
 }
 
