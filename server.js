@@ -43,8 +43,6 @@ app.get('/about', renderAboutPage);
 
 app.get('/results', renderResultsPage);
 
-// app.post('/results', search)
-
 app.get('/saved', renderSavedSearches);
 
 app.post('/saved', searchUsernameData);
@@ -158,6 +156,7 @@ async function searchLocation(query, response) {
 
     const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
     const wwo = await searchWorldWeather(location.lat, location.lng).catch(error => console.log(error));
+
     const sunriseArray = [];
     for (let i in wwo) {
         const sunrise = await searchSunriseSunset(location.lat, location.lng, wwo[i]).catch(error => console.log(error));

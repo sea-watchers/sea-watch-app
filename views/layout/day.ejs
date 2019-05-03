@@ -8,6 +8,7 @@
     <p>Low:
         <%= day.minTemp %>&#176;</p>
 
+
     <p>Tides: </p>
     <% for (let i in day.tides) { %>
         <p>
@@ -29,6 +30,7 @@
             <p> Nautical Twilight PM:
                 <%= sun.nauticalTwilightPM %>
             </p>
+
             <button id="<%= i %>" class="showHourly">Show Hourly</button>
 
 </div>
