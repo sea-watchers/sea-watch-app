@@ -237,6 +237,8 @@ function searchUsernameData(request, response) {
                 console.log('User does not exist, saving to database')
                 storeUsername(request, response);
             } else {
+                response.render('pages/searches/saved_searches.ejs', { data: 'nope' })
+
                 console.log('Username does not exist');
             }
         }
