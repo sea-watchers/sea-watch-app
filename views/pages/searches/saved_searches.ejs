@@ -6,7 +6,7 @@
 
 
             <div id="username">
-                <p>Enter Username:  </p>
+                <p>Enter Username: </p>
                 <form action="/saved" method="POST">
                     <input name="enterUsername" type="text" placeholder="insert username">
 
@@ -17,20 +17,24 @@
             <!-- One partial of Location, Image, sailboat, animation -->
 
             <% if(data) {%>
-            
-            <div id="allSavedSearches">
-                 <% for(var i = 0; i < data.length; i++){ %>
-                      <%- include('../../layout/location.ejs', {eachData:data[i]}) %>
-                 <% } %>
 
-            </div>
+                <% if(data === 'nope') {%>
+                    <p>User does not exist</p>
+                    <% } else { %>
 
-            <% } %>
+                        <div id="allSavedSearches">
+                            <% for(var i = 0; i < data.length; i++){ %>
+                                <%- include('../../layout/location.ejs', {eachData:data[i]}) %>
+                                    <% } %>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-            <script src="/js/app.js"></script>
+                        </div>
+                        <% } %>
+                            <% } %>
 
-            <%- include('../../layout/footer.ejs') %>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+                                <script src="/js/app.js"></script>
+
+                                <%- include('../../layout/footer.ejs') %>
 
     </body>
 
