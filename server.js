@@ -140,7 +140,6 @@ function renderSavedSearches(request, response) {
 }
 
 function savedLocation(request, response) {
-    console.log('TESTING ', request.body.location);
     let savedLocation = request.body.location;
     searchLocation(savedLocation, response);
 }
@@ -207,10 +206,8 @@ function searchWorldWeather(lat, lng) {
 function searchSunriseSunset(lat, lng, day) {
     //need to change this so that we get info for each day in the week
     return new Promise(resolve => {
-        console.log(day.date);
         const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${day.date}&formatted=0`
         superagent.get(URL).then(result => {
-            console.log(result.body.results)
             resolve(new SunriseSunset(result.body.results));
         });
     });
@@ -218,28 +215,20 @@ function searchSunriseSunset(lat, lng, day) {
 
 function searchUsernameData(request, response) {
     const { enterUsername } = request.body;
-    console.log(request.body.enterUsername, 'enterUsername')
     client.query(SQL.getUsername, [enterUsername]).then(result => {
-        console.log('Username Search', result.rows);
         if (result.rows.length) {
             //user ID corresponds to person in schema.sql 
             let userId = result.rows[0].id;
-            console.log('Store name and data', userId);
             if (request.body.lat) {
-                console.log('User exists, saving to database')
                 storeData(request, response, userId);
             } else {
-                console.log('User exists, not saving to database')
                 renderUserSearches(userId, response);
             }
         } else {
             if (request.body.lat) {
-                console.log('User does not exist, saving to database')
                 storeUsername(request, response);
             } else {
                 response.render('pages/searches/saved_searches.ejs', { data: 'nope' })
-
-                console.log('Username does not exist');
             }
         }
     });
@@ -250,7 +239,6 @@ function storeUsername(request, response) {
     client.query(SQL.saveUsername, [enterUsername]).then(result => {
         client.query(SQL.getUsername, [enterUsername]).then(result => {
             let userId = result.rows[0].id;
-            console.log('Store name and data', userId);
             storeData(request, response, userId);
         })
     });
@@ -258,8 +246,6 @@ function storeUsername(request, response) {
 
 function renderUserSearches(id, response) {
     client.query(SQL.getData, [id]).then(result => {
-        console.log('From render searches', result.rows)
-            // response.redirect('/saved');
         let renderedData = result.rows;
         response.render('pages/searches/saved_searches.ejs', { data: renderedData });
 
@@ -275,10 +261,7 @@ function storeData(request, response, userId) {
 
 function deleteLocation(request, response) {
     const { id, location, userName } = request.body;
-    console.log(id, location);
     client.query(SQL.deleteLocation, [id, location]).then(result => {
         renderUserSearches(userName, response);
     })
-
-    //
 }
