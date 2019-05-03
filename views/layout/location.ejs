@@ -3,12 +3,12 @@
             <p><%= eachData.location%></p>
             <form action="/results" method="POST">
                 <input type="hidden" name="location" value="<%= eachData.location %>">
-                <input type="submit" value="See Data">
+                <input class="boatAnimate" type="submit" value="See Data">
             </form>
-                
+
             <!-- Just a placeholder image. Better sailboat image coming later. Needs to be PNG.-->
             <!-- This image will most likely be a sailboat. The image will get animated upon a click. -->
-            <img class="sample_image" src="assets/babySailboat.png" alt="" width=150>
+            <img class="boat_image" src="assets/babySailboat.png" alt="" width=150>
 
             <!-- animate the sailboat image -->
 

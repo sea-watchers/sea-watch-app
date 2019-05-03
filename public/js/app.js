@@ -17,4 +17,7 @@ $(document).ready(function() {
     $('.hourlyTable').hide();
   });
 
+  $('.boatAnimate').on('click', function() {
+    $('.boat_image').css('webkitAnimationPlayState', 'running');
+  })
 });
