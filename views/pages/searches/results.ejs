@@ -25,6 +25,7 @@
                 </div>
 
                 <section id="dailyWeatherSection">
+
                     <% let hourly = [] %>
                         <% let hourlyTides = [] %>
 
@@ -34,7 +35,7 @@
                                         <% hourlyTides.push(day.hourlyTides); %>
 
 
-                                            <%- include('../../layout/day.ejs', {day, i}) %>
+                                            <%- include('../../layout/day.ejs', {day, i, sun: data.sunrise[i]}) %>
                                                 <% } %>
                 </section>
                 <% for (let i in hourly) {%>

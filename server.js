@@ -110,8 +110,8 @@ function SunriseSunset(data) {
     this.sunrise = data.sunrise;
     this.sunset = data.sunset;
     this.solarNoon = data.solar_noon;
-    this.nauticalTwillightAM = data.nautical_twilight_begin;
-    this.nauticalTwillightPM = data.nautical_twilight_end;
+    this.nauticalTwilightAM = data.nautical_twilight_begin;
+    this.nauticalTwilightPM = data.nautical_twilight_end;
 }
 
 function StormGlass(data) {
@@ -144,7 +144,7 @@ function renderResultsPage(request, response) {
 
 function renderSavedSearches(request, response) {
     // Query database for the ID of the username that the user enters, then call the renderUserSearches
-    response.render('pages/searches/saved_searches.ejs', {data:null})
+    response.render('pages/searches/saved_searches.ejs', { data: null })
 }
 
 function savedLocation(request, response) {
@@ -159,24 +159,38 @@ async function searchLocation(query, response) {
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
     const result = await superagent.get(URL).catch(error => console.log(error));
     const location = new Location(result.body.results[0]);
+    const timezoneURL = `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1458000000&key=AIzaSyDWENiG2AlrOyEm9g8-3FdS_moPoi2lZys`;
+    const timezoneData = await superagent.get(timezoneURL).catch(error => console.log(error));
+    location.timezoneOffset = timezoneData.body.rawOffset;
     const map = `<img id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
     &key=${process.env.GEOCODE_API_KEY}">`;
 
     const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
     const wwo = await searchWorldWeather(location.lat, location.lng).catch(error => console.log(error));
     const solunar = await searchSolunar(location.lat, location.lng).catch(error => console.log(error));
-    const sunset = await searchSunriseSunset(location.lat, location.lng).catch(error => console.log(error));
+    const sunriseArray = [];
+    for (let i in wwo) {
+        const sunrise = await searchSunriseSunset(location.lat, location.lng, wwo[i]).catch(error => console.log(error));
+        sunriseArray.push(sunrise);
+    }
+    sunriseArray.forEach(day => {
+        for (let i in day) {
+            const adjusted = Date.parse(day[i]) - location.timezoneOffset;
+            day[i] = new Date(adjusted).toTimeString().slice(0, 5);
+        }
+    })
+
     // const storm = await searchStormGlass(location.lat, location.lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
     let data = {
         location: location,
         aqua: aqua,
         wwo: wwo,
+        sunrise: sunriseArray,
         solunar: solunar,
-        sunset: sunset,
         map: map,
         // storm: storm
     }
-    console.log(solunar, sunset);
+    console.log(sunriseArray[0]);
     response.render('pages/searches/results.ejs', { data });
 }
 
@@ -233,11 +247,13 @@ function searchSolunar(lat, lng) {
     });
 }
 
-function searchSunriseSunset(lat, lng) {
+function searchSunriseSunset(lat, lng, day) {
     //need to change this so that we get info for each day in the week
     return new Promise(resolve => {
-        const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`
+        console.log(day.date);
+        const URL = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${day.date}&formatted=0`
         superagent.get(URL).then(result => {
+            console.log(result.body.results)
             resolve(new SunriseSunset(result.body.results));
         });
     });
@@ -284,9 +300,9 @@ function storeUsername(request, response) {
 function renderUserSearches(id, response) {
     client.query(SQL.getData, [id]).then(result => {
         console.log('From render searches', result.rows)
-        // response.redirect('/saved');
+            // response.redirect('/saved');
         let renderedData = result.rows;
-        response.render('pages/searches/saved_searches.ejs',{data:renderedData});
+        response.render('pages/searches/saved_searches.ejs', { data: renderedData });
 
     })
 }

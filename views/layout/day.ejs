@@ -14,7 +14,21 @@
             <%= day.tides[i].tide_type + ' ' + day.tides[i].tideTime%>
         </p>
         <% } %>
-
+            <p> Sunrise:
+                <%= sun.sunrise %>
+            </p>
+            <p> Sunset:
+                <%= sun.sunset %>
+            </p>
+            <p> Solar Noon:
+                <%= sun.solarNoon %>
+            </p>
+            <p> Nautical Twilight AM:
+                <%= sun.nauticalTwilightAM %>
+            </p>
+            <p> Nautical Twilight PM:
+                <%= sun.nauticalTwilightPM %>
+            </p>
             <button id="<%= i %>" class="showHourly">Show Hourly</button>
 
 </div>
