@@ -1,6 +1,5 @@
 body {
     margin: 0 auto 100px auto;
-
 }
 
 body>* {
@@ -12,7 +11,7 @@ h2 {
     font-weight: 700;
     font-size: 20px;
     line-height: 23px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: -1px;
     margin: 0 0 23px 0;
 }
@@ -22,7 +21,7 @@ h3 {
     font-weight: 600;
     font-size: 17px;
     line-height: 23px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: -1px;
     margin: 0 0 23px 0;
 }
@@ -62,7 +61,7 @@ nav {
 
 #reveal {
     font-size: 1.3em;
-    height: 30px;
+    height: 35px;
 }
 
 #buttonHolder {
@@ -85,17 +84,31 @@ nav {
 .authorImages {
     width: 20%;
     height: 100%;
-    box-shadow: 7px 7px 7px #0635cf;
+    box-shadow: 7px 7px 7px #034680;
     border-radius: 20px;
 }
 
-.authorImages:hover {
-    transform: rotate(-30deg);
-}
 
-.authorImages:hover>* {
-    transform: rotate(30deg);
-}
+.authorImages:hover {
+    animation: shake 0.5s; 
+    animation-iteration-count: infinite; 
+  }
+  
+  /* https://www.w3schools.com/howto/howto_css_shake_image.asp */
+
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
 
 .biography {
     float: right;
@@ -109,7 +122,7 @@ nav {
     left: 50%;
     transform: translate(-50%, -50%);
     margin-left: 10px;
-    font-family:  sans-serif;
+    font-family: sans-serif;
     font-size: 20px;
 }
 
@@ -147,33 +160,31 @@ footer {
     bottom: 0;
     text-align: center;
     margin: 0 auto;
-
     border: 1px solid black;
     font-family: 'Cantarell', sans-serif;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 23px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     letter-spacing: -1px;
-    margin: 0 0 23px 0;
 }
 
-footer > * {
+footer>* {
     height: 32px;
     margin: -10px auto 5px auto;
     width: 23%;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
-
 }
 
 footer:last-child {
     padding-top: 17px;
 }
 
-
-
+#sofishticated {
+    margin: 50px auto 30px;
+}
 
 /* desktop */
 
@@ -186,5 +197,49 @@ footer:last-child {
     .dailyWeather {
         width: 13%;
     }
+
 }
 
+/* https://stackoverflow.com/questions/6410730/how-to-do-a-webkit-css-endless-rotation-animation*/
+
+@-webkit-keyframes rotating {
+    from {
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  #compassLogo {
+    -webkit-animation: rotating 9s linear infinite;
+    -moz-animation: rotating 9s linear infinite;
+    -ms-animation: rotating 9s linear infinite;
+    -o-animation: rotating 9s linear infinite;
+    animation: rotating 9s linear infinite;
+  }
+
+  input {
+    font-family: 'Cantarell', sans-serif;
+    font-size: 17px;
+    line-height: 23px;
+  }

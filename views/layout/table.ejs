@@ -2,26 +2,24 @@
 
     <tbody>
         <!-- for each property in the hour objects in the hourly array create a row with a lable -->
-        <% console.log(tableData) %>
-            <% console.log(tableData.length) %>
 
+        <% for (let i in tableData[0]) { %>
+            <tr>
+                <th>
 
-                <% for (let i in tableData[0]) { %>
-                    <tr>
-                        <th>
-
-                            <%= i.replace('_', ' ') %>
-                        </th>
-                        <% for (let j = 0; j < 24; j++) { %>
-                            <td>
-                                <%= tableData[j][i] %>
-                            </td>
-                            <% } %>
-
-                    </tr>
+                    <%= i.replace('_', ' ') %>
+                </th>
+                <% for (let j = 0; j < 24; j++) { %>
+                    <td>
+                        <%= tableData[j][i] %>
+                    </td>
                     <% } %>
 
-                        <!-- for each hour create a data call for the row -->
+            </tr>
+            <% } %>
+
+
+                <!-- for each hour create a data call for the row -->
 
     </tbody>
 
