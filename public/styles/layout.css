@@ -66,7 +66,8 @@ nav {
 
 #buttonHolder {
     margin: auto;
-    margin-top: 70px;
+    margin-top: 10px;
+    margin-bottom: 60px;
     height: 30px;
     display: flex;
     justify-content: space-evenly;
@@ -185,6 +186,11 @@ footer:last-child {
 #sofishticated {
     margin: 50px auto 30px;
 }
+
+#appDescription {
+    padding-top: 40px;
+}
+
 
 /* desktop */
 
