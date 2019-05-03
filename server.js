@@ -148,7 +148,7 @@ async function searchLocation(query, response) {
     const URL = `https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${process.env.GEOCODE_API_KEY}`;
     const result = await superagent.get(URL).catch(error => console.log(error));
     const location = new Location(result.body.results[0]);
-    const timezoneURL = `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1458000000&key=AIzaSyDWENiG2AlrOyEm9g8-3FdS_moPoi2lZys`;
+    const timezoneURL = `https://maps.googleapis.com/maps/api/timezone/json?location=${location.lat},${location.lng}&timestamp=1458000000&key=${process.env.GEOCODE_API_KEY}`;
     const timezoneData = await superagent.get(timezoneURL).catch(error => console.log(error));
     location.timezoneOffset = timezoneData.body.rawOffset;
     const map = `<img id="map" src="https://maps.googleapis.com/maps/api/staticmap?center=${location.lat}%2c%20${location.lng}&zoom=13&size=600x300&maptype=roadmap
