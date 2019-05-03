@@ -101,21 +101,12 @@ function HourlyTide(hourlyData) {
     this.Water_Temp = hourlyData.waterTemp_F + '°';
 }
 
-function Solunar(data) {
-    this.moonPhase = data.moonPhase
-    this.moonIllumination = data.moonIllumination;
-}
-
 function SunriseSunset(data) {
     this.sunrise = data.sunrise;
     this.sunset = data.sunset;
     this.solarNoon = data.solar_noon;
     this.nauticalTwilightAM = data.nautical_twilight_begin;
     this.nauticalTwilightPM = data.nautical_twilight_end;
-}
-
-function StormGlass(data) {
-    this.hour = data.time.slice(11, 13);
 }
 
 //==================================
@@ -167,7 +158,6 @@ async function searchLocation(query, response) {
 
     const aqua = await searchAquaplot(location.lat, location.lng).catch(error => console.log(error));
     const wwo = await searchWorldWeather(location.lat, location.lng).catch(error => console.log(error));
-    const solunar = await searchSolunar(location.lat, location.lng).catch(error => console.log(error));
     const sunriseArray = [];
     for (let i in wwo) {
         const sunrise = await searchSunriseSunset(location.lat, location.lng, wwo[i]).catch(error => console.log(error));
@@ -180,15 +170,12 @@ async function searchLocation(query, response) {
         }
     })
 
-    // const storm = await searchStormGlass(location.lat, location.lng).catch(error => console.log(error)); //limit 50 requests per day. Comment out unless specifially testing.
     let data = {
         location: location,
         aqua: aqua,
         wwo: wwo,
         sunrise: sunriseArray,
-        solunar: solunar,
         map: map,
-        // storm: storm
     }
     console.log(sunriseArray[0]);
     response.render('pages/searches/results.ejs', { data });
@@ -204,26 +191,6 @@ function searchAquaplot(lat, lng) {
     });
 }
 
-function searchStormGlass(lat, lng) {
-    return new Promise(resolve => {
-        const URL = `https://api.stormglass.io/v1/weather/point?lat=${lat}&lng=${lng}`;
-        superagent.get(URL).set('Authorization', process.env.STORMGLASS_API_KEY).then(result => {
-            const hourlyWeatherData = result.body.hours;
-            const week = [];
-            let index = 0;
-            for (let i = 0; i < 7; i++) {
-                const day = [];
-                for (let j = 0; j < 24; j++) {
-                    day.push(new StormGlass(hourlyWeatherData[index]));
-                    index++;
-                }
-                week.push(day);
-            }
-            resolve(week);
-        });
-    });
-}
-
 function searchWorldWeather(lat, lng) {
     return new Promise(resolve => {
         const tide = 'yes'
@@ -232,17 +199,6 @@ function searchWorldWeather(lat, lng) {
         superagent.get(URL).then(result => {
             const week = result.body.data.weather.map(day => new WorldWeather(day));
             resolve(week);
-        });
-    });
-}
-
-function searchSolunar(lat, lng) {
-    //need to change this to get info for each day in the week
-    return new Promise(resolve => {
-        const date = Date.now();
-        const URL = `https://api.solunar.org/solunar/${lat},${lng},${date},-4`
-        superagent.get(URL).then(result => {
-            resolve(new Solunar(result.body.moonPhase));
         });
     });
 }
