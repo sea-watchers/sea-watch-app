@@ -47,6 +47,8 @@ app.get('/saved', renderSavedSearches);
 
 app.post('/saved', searchUsernameData);
 
+app.delete('/saved', deleteLocation);
+
 app.post('/results', savedLocation);
 
 app.listen(PORT, () => console.log(`app is running on port ${PORT}`));
@@ -60,6 +62,7 @@ SQL.getUsername = 'SELECT * FROM users WHERE user_name=$1';
 SQL.saveUsername = 'INSERT INTO users (user_name) VALUES ($1)';
 SQL.saveData = 'INSERT INTO saved_searches (location, lat, lng, person) VALUES ($1, $2, $3, $4)';
 SQL.getData = 'SELECT * FROM saved_searches WHERE person=$1'
+SQL.deleteLocation = 'DELETE FROM saved_searches WHERE id=$1 AND location=$2';
 
 //==================================
 // Constructors
@@ -176,7 +179,6 @@ async function searchLocation(query, response) {
         sunrise: sunriseArray,
         map: map,
     }
-    console.log(sunriseArray[0]);
     response.render('pages/searches/results.ejs', { data });
 }
 
@@ -267,4 +269,14 @@ function storeData(request, response, userId) {
     client.query(SQL.saveData, [location, lat, lng, userId]).then(result => {
         renderUserSearches(userId, response);
     })
+}
+
+function deleteLocation(request, response) {
+    const { id, location, userName } = request.body;
+    console.log(id, location);
+    client.query(SQL.deleteLocation, [id, location]).then(result => {
+        renderUserSearches(userName, response);
+    })
+
+    //
 }

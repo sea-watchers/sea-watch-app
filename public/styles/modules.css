@@ -35,6 +35,7 @@ h2 {
     color: white;
 }
 
+
 /* input {
     width: 16%;
     height: 20px;
@@ -80,11 +81,21 @@ h3 {
 }
 
 @keyframes sailBoat {
-    20% {transform: translateX(-500px) translateY(-20px) rotate(20deg)}
-    40% {transform: translateX(-1000px) translateY(-40px) rotate(40deg)}
-    60% {transform: translateX(-1500px) translateY(-60px) rotate(60deg)}
-    80% {transform: translateX(-2000px) translateY(-80px) rotate(80deg)}
-    100% {transform: translateX(-2500px) translateY(-100px) rotate(100deg)}
+    20% {
+        transform: translateX(-500px) translateY(-20px) rotate(20deg)
+    }
+    40% {
+        transform: translateX(-1000px) translateY(-40px) rotate(40deg)
+    }
+    60% {
+        transform: translateX(-1500px) translateY(-60px) rotate(60deg)
+    }
+    80% {
+        transform: translateX(-2000px) translateY(-80px) rotate(80deg)
+    }
+    100% {
+        transform: translateX(-2500px) translateY(-100px) rotate(100deg)
+    }
 }
 
 #username {
@@ -151,9 +162,45 @@ nav {
     border: 2px solid black;
 }
 
+section.hourlyTable {
+    overflow-x: auto;
+}
+
 .hourlyTable,
 #hideDetails {
     display: none;
 }
 
+@media (max-width: 1280px) {
+    .dailyWeather {
+        width: 80%;
+        margin: 10px auto;
+    }
+}
 
+@media (max-width: 768px) {
+    #allSavedSearches {
+        display: flex;
+        flex-flow: column;
+    }
+    .sample_data {
+        width: 80%;
+        margin: 10px auto;
+    }
+    .authors {
+        display: flex;
+        flex-flow: column;
+        text-align: center;
+        height: 700px;
+        margin: 10px auto;
+    }
+    .authors>* {
+        margin: auto;
+    }
+    .authorImages {
+        width: 60%;
+    }
+    #map {
+        width: 80%;
+    }
+}
