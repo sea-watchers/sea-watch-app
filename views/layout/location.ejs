@@ -1,16 +1,24 @@
+<div class="sample_data">
+    <p>
+        <%= eachData.location%>
+    </p>
+    <form action="/results" method="POST">
+        <input type="hidden" name="location" value="<%= eachData.location %>">
+        <input class="boatAnimate" type="submit" value="See Data">
+    </form>
 
-    <div class="sample_data"> 
-            <p><%= eachData.location%></p>
-            <form action="/results" method="POST">
-                <input type="hidden" name="location" value="<%= eachData.location %>">
-                <input class="boatAnimate" type="submit" value="See Data">
-            </form>
+    <form action="/saved" method="POST">
+        <input type="hidden" name="_method" value="delete">
+        <input type="hidden" name="location" value="<%= eachData.location %>">
+        <input type="hidden" name="userName" value="<%= eachData.person %>">
+        <input type="hidden" name="id" value="<%= eachData.id %>">
+        <input type="submit" value="Delete Location">
+    </form>
 
-            <!-- Just a placeholder image. Better sailboat image coming later. Needs to be PNG.-->
-            <!-- This image will most likely be a sailboat. The image will get animated upon a click. -->
-            <img class="boat_image" src="assets/babySailboat.png" alt="" width=150>
+    <!-- Just a placeholder image. Better sailboat image coming later. Needs to be PNG.-->
+    <!-- This image will most likely be a sailboat. The image will get animated upon a click. -->
+    <img class="boat_image" src="assets/babySailboat.png" alt="" width=150>
 
-            <!-- animate the sailboat image -->
+    <!-- animate the sailboat image -->
 
-    </div>
-
+</div>
